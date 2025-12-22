@@ -16,6 +16,8 @@ const formatRedirectUrl = (redirectUrl, isPaymentSuccess, isPaymentRecordSuccess
 app.get("/payment-success", (req, res) => {
       console.log("PagoPA TEST SUCCESS CALLBACK INVOKED");
       const redirectUrl = req.query.redirectUrl;
+      console.log("Request Query:", req.query);
+      console.log("Redirect URL:", redirectUrl);
     try {
       console.log(formatRedirectUrl(redirectUrl, true, true))
         return res.redirect(formatRedirectUrl(redirectUrl, true, true));
@@ -28,6 +30,8 @@ app.get("/payment-success", (req, res) => {
 app.get("/payment-failed", (req, res) => {
       console.log("PagoPA TEST FAILED CALLBACK INVOKED");
       const redirectUrl = req.query.redirectUrl;
+      console.log("Request Query:", req.query);
+      console.log("Redirect URL:", redirectUrl);
     try {
       console.log(formatRedirectUrl(redirectUrl, false, true))
         return res.redirect(formatRedirectUrl(redirectUrl, false, true));
