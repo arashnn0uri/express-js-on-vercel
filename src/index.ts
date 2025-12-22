@@ -1,14 +1,40 @@
 import express from "express";
 const app = express();
 
+const formatRedirectUrl = (redirectUrl, isPaymentSuccess, isPaymentRecordSuccess) => {
+  const errorMessageCode = !isPaymentSuccess
+    ? 'sol.error.paymentFailed'
+    : !isPaymentRecordSuccess
+    ? 'sol.error.paymentRecordFailed'
+    : '';
+
+  const query = `?payment=${isPaymentSuccess}&record=${isPaymentRecordSuccess}&error=${errorMessageCode}`;
+
+  return `${redirectUrl}${query}`;
+};
+
 app.get("/payment-success", (req, res) => {
-  const redirectUrl = req.query.redirectUrl || "sinergassolapp://payment";
-  res.redirect(redirectUrl as string); // sends HTTP 302 to your app deep link
+      console.log("PagoPA TEST SUCCESS CALLBACK INVOKED");
+      const redirectUrl = req.query.redirectUrl;
+    try {
+      console.log(formatRedirectUrl(redirectUrl, true, true))
+        return res.redirect(formatRedirectUrl(redirectUrl, true, true));
+      
+    } catch (e) {
+      return res.redirect(formatRedirectUrl(redirectUrl, true, false));
+    }
 });
 
 app.get("/payment-failed", (req, res) => {
-  const redirectUrl = req.query.redirectUrl || "sinergassolapp://payment";
-  res.redirect(redirectUrl as string);
+      console.log("PagoPA TEST FAILED CALLBACK INVOKED");
+      const redirectUrl = req.query.redirectUrl;
+    try {
+      console.log(formatRedirectUrl(redirectUrl, false, true))
+        return res.redirect(formatRedirectUrl(redirectUrl, false, true));
+      
+    } catch (e) {
+      return res.redirect(formatRedirectUrl(redirectUrl, false, false));
+    }
 });
 
 app.listen(process.env.PORT || 3000, () =>
