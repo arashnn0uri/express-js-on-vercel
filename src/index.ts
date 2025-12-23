@@ -13,13 +13,12 @@ const formatRedirectUrl = (redirectUrl, isPaymentSuccess, isPaymentRecordSuccess
   return `${redirectUrl}${query}`;
 };
 
-app.get("/payment-success", (req, res) => {
+app.get("/payment-success", async (req, res) => {
       console.log("PagoPA TEST SUCCESS CALLBACK INVOKED");
       const redirectUrl = req.query.redirectUrl;
-      console.log("Request Query:", req.query);
-      console.log("Redirect URL:", redirectUrl);
     try {
-      console.log(formatRedirectUrl(redirectUrl, true, true))
+        // add a delay of 10 seconds to simulate processing time
+        await new Promise(resolve => setTimeout(resolve, 10000));
         return res.redirect(formatRedirectUrl(redirectUrl, true, true));
       
     } catch (e) {
@@ -27,13 +26,12 @@ app.get("/payment-success", (req, res) => {
     }
 });
 
-app.get("/payment-failed", (req, res) => {
+app.get("/payment-failed", async (req, res) => {
       console.log("PagoPA TEST FAILED CALLBACK INVOKED");
       const redirectUrl = req.query.redirectUrl;
-      console.log("Request Query:", req.query);
-      console.log("Redirect URL:", redirectUrl);
     try {
-      console.log(formatRedirectUrl(redirectUrl, false, true))
+        // add a delay of 10 seconds to simulate processing time
+        await new Promise(resolve => setTimeout(resolve, 10000));
         return res.redirect(formatRedirectUrl(redirectUrl, false, true));
       
     } catch (e) {
