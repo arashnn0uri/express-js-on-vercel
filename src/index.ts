@@ -18,7 +18,7 @@ app.get("/payment-success", async (req, res) => {
       const redirectUrl = req.query.redirectUrl;
     try {
         // add a delay of 10 seconds to simulate processing time
-        await new Promise(resolve => setTimeout(resolve, 10000));
+        await new Promise(resolve => setTimeout(resolve, 5000));
         return res.redirect(formatRedirectUrl(redirectUrl, true, true));
       
     } catch (e) {
@@ -31,7 +31,7 @@ app.get("/payment-failed", async (req, res) => {
       const redirectUrl = req.query.redirectUrl;
     try {
         // add a delay of 10 seconds to simulate processing time
-        await new Promise(resolve => setTimeout(resolve, 10000));
+        await new Promise(resolve => setTimeout(resolve, 5000));
         return res.redirect(formatRedirectUrl(redirectUrl, false, true));
       
     } catch (e) {
