@@ -19,8 +19,7 @@ app.get("/payment", async (req, res) => {
         // add a delay of 10 seconds to simulate processing time
         await new Promise(resolve => setTimeout(resolve, 5000));
         // based on math.random(), decide if the payment is successful or not
-        const isPaymentSuccess = Math.random() < 0.5; // 80% chance of success
-        // simulate payment record success with 90% chance
+        const isPaymentSuccess = Math.random() < 0.5;
         const isPaymentRecordSuccess = Math.random() < 0.5;
         return res.redirect(formatRedirectUrl(redirectUrl, isPaymentSuccess, isPaymentRecordSuccess));        
       
