@@ -78,7 +78,6 @@ app.get("/payment", (req, res) => {
             background: rgba(0,0,0,0.5);
             color: white;
             font-size: 2rem;
-            display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
