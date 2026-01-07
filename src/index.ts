@@ -13,29 +13,19 @@ const formatRedirectUrl = (redirectUrl, isPaymentSuccess, isPaymentRecordSuccess
   return `${redirectUrl}${query}`;
 };
 
-app.get("/payment-success", async (req, res) => {
-      console.log("PagoPA TEST SUCCESS CALLBACK INVOKED");
+app.get("/payment", async (req, res) => {
       const redirectUrl = req.query.redirectUrl;
     try {
         // add a delay of 10 seconds to simulate processing time
         await new Promise(resolve => setTimeout(resolve, 5000));
-        return res.redirect(formatRedirectUrl(redirectUrl, true, true));
+        // based on math.random(), decide if the payment is successful or not
+        const isPaymentSuccess = Math.random() < 0.8; // 80% chance of success
+        // simulate payment record success with 90% chance
+        const isPaymentRecordSuccess = Math.random() < 0.9;
+        return res.redirect(formatRedirectUrl(redirectUrl, isPaymentSuccess, isPaymentRecordSuccess));        
       
     } catch (e) {
       return res.redirect(formatRedirectUrl(redirectUrl, true, false));
-    }
-});
-
-app.get("/payment-failed", async (req, res) => {
-      console.log("PagoPA TEST FAILED CALLBACK INVOKED");
-      const redirectUrl = req.query.redirectUrl;
-    try {
-        // add a delay of 10 seconds to simulate processing time
-        await new Promise(resolve => setTimeout(resolve, 5000));
-        return res.redirect(formatRedirectUrl(redirectUrl, false, true));
-      
-    } catch (e) {
-      return res.redirect(formatRedirectUrl(redirectUrl, false, false));
     }
 });
 
